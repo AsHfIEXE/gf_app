@@ -42,7 +42,7 @@ const scale = (id: string, number: number, section: string, title: string, lowLa
 });
 
 export const questions: Question[] = [
-  text("age", 1, "basic", "How old are you?", "You must be 18 or over to apply.", true),
+  text("age", 1, "basic", "How old are you?", undefined, true),
   text("nickname", 2, "basic", "What should I call you?", "A nickname, alias, initials—or nothing at all. This is optional."),
   text("pronouns", 3, "basic", "What are your pronouns?", "Optional."),
   text("location", 4, "basic", "Where are you from?", "Country and city/region are plenty. Never enter your address."),
