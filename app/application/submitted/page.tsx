@@ -5,9 +5,13 @@ import { useSearchParams } from "next/navigation";
 import { ArchiveLogo } from "@/components/archive-shell";
 import { ReportCard } from "@/components/report-card";
 import { getLastReportId } from "@/lib/application-store";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 export default function SubmittedPage() {
+  return <Suspense fallback={<ReceiptLoading />}><SubmittedContent /></Suspense>;
+}
+
+function SubmittedContent() {
   const params = useSearchParams();
   const [fallback, setFallback] = useState("GF-XXXX-XXXX");
   useEffect(() => setFallback(getLastReportId() || "GF-XXXX-XXXX"), []);
@@ -24,4 +28,8 @@ export default function SubmittedPage() {
       <div className="receipt-actions"><Link className="button button-primary" href="/status">CHECK APPLICATION STATUS <span>→</span></Link><Link className="button button-quiet" href="/">RETURN TO ARCHIVE</Link></div>
     </section>
   </main>;
+}
+
+function ReceiptLoading() {
+  return <main className="receipt-page"><header className="form-header"><ArchiveLogo /></header><section className="receipt-content"><p className="eyebrow"><span />ARCHIVE TRANSMISSION</p><h1>OPENING<br /><em>ARCHIVE...</em></h1></section></main>;
 }
