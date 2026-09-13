@@ -4,6 +4,7 @@ import { ArchiveShell, Eyebrow, Footer } from "@/components/archive-shell";
 export default function LandingPage() {
   return <ArchiveShell className="landing-page">
     <div className="landing-grid" />
+    <img className="landing-brand-art" src="/application-archive-logo-source.png" alt="The Application — Anonymous Relationship Archive" />
     <section className="hero">
       <Eyebrow>ARCHIVE OPEN · EST. 2026</Eyebrow>
       <h1>THE<br /><em>APPLICATION</em></h1>

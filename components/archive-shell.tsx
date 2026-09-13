@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 export function ArchiveLogo({ compact = false }: { compact?: boolean }) {
   return (
     <Link className="archive-logo" href="/" aria-label="The Application home">
-      <span className="archive-seal">GF</span>
+      <span className="archive-seal"><img src="/application-archive-logo-source.png" alt="" /></span>
       {!compact && <span><b>THE APPLICATION</b><i>PRIVATE ARCHIVE</i></span>}
     </Link>
   );
