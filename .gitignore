@@ -6,3 +6,6 @@ out
 npm-install.log
 
 .vercel
+.agents/
+skills-lock.json
+*.tsbuildinfo

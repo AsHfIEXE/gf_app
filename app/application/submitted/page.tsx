@@ -4,8 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { ArchiveLogo } from "@/components/archive-shell";
 import { ReportCard } from "@/components/report-card";
-import { getLastReportId } from "@/lib/application-store";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense } from "react";
 
 export default function SubmittedPage() {
   return <Suspense fallback={<ReceiptLoading />}><SubmittedContent /></Suspense>;
@@ -13,9 +12,7 @@ export default function SubmittedPage() {
 
 function SubmittedContent() {
   const params = useSearchParams();
-  const [fallback, setFallback] = useState("GF-XXXX-XXXX");
-  useEffect(() => setFallback(getLastReportId() || "GF-XXXX-XXXX"), []);
-  const reportId = params.get("id") || fallback;
+  const reportId = params.get("id") || "GF-XXXX-XXXX";
   return <main className="receipt-page">
     <header className="form-header"><ArchiveLogo /></header>
     <section className="receipt-content">

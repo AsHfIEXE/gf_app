@@ -6,9 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "db:migrate": "node --env-file=.env.migration scripts/migrate-db.mjs",
     "lint": "eslint ."
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
     "@types/node": "^22.10.2",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
@@ -18,7 +20,9 @@
     "typescript": "^5.7.2"
   },
   "devDependencies": {
+    "@types/pg": "^8.23.1",
     "eslint": "^9.18.0",
-    "eslint-config-next": "^16.1.1"
+    "eslint-config-next": "^16.1.1",
+    "pg": "^8.23.0"
   }
 }

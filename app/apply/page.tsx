@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArchiveLogo, Eyebrow } from "@/components/archive-shell";
 import { QuestionInput } from "@/components/question-input";
-import { createReportId, saveApplication, setLastReportId } from "@/lib/application-store";
 import { questions, sections } from "@/lib/questions";
 
 export default function ApplyPage() {
@@ -13,6 +12,7 @@ export default function ApplyPage() {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showError, setShowError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const question = questions[index];
   const sectionIndex = sections.findIndex((section) => section.id === question.section);
   const section = sections[sectionIndex];
@@ -30,20 +30,26 @@ export default function ApplyPage() {
   const continueForm = () => {
     if (!valid()) { setShowError(true); return; }
     setShowError(false);
-    if (index === questions.length - 1) { submit(); return; }
+    if (index === questions.length - 1) { void submit(); return; }
     setIndex((value) => value + 1);
   };
 
-  const submit = () => {
+  const submit = async () => {
     setIsSubmitting(true);
-    const reportId = createReportId();
-    const timestamp = new Date().toISOString();
-    saveApplication({
-      id: crypto.randomUUID(), reportId, answers, status: "RECEIVED", createdAt: timestamp, updatedAt: timestamp,
-      adminNotes: "", ratings: {},
-    });
-    setLastReportId(reportId);
-    window.setTimeout(() => router.push(`/application/submitted?id=${encodeURIComponent(reportId)}`), 750);
+    setSubmitError("");
+    try {
+      const response = await fetch("/api/applications", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ answers }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || "The archive could not receive this application.");
+      window.setTimeout(() => router.push(`/application/submitted?id=${encodeURIComponent(result.reportId)}`), 450);
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : "The archive could not receive this application. Please try again.");
+      setIsSubmitting(false);
+    }
   };
 
   return <main className={`form-page ${question.section === "final" ? "final-question" : ""}`}>
@@ -66,6 +72,7 @@ export default function ApplyPage() {
         <button className="button button-back" onClick={() => { setShowError(false); setIndex((value) => Math.max(0, value - 1)); }} disabled={index === 0}>← BACK</button>
         <button className="button button-primary" onClick={continueForm} disabled={isSubmitting}>{isSubmitting ? "SEALING FILE..." : index === questions.length - 1 ? "SUBMIT APPLICATION →" : "CONTINUE →"}</button>
       </div>
+      {submitError && <p className="field-error" role="alert">{submitError}</p>}
       <div className="full-progress"><span style={{ width: `${progress}%` }} /></div>
       <p className="form-note">{question.required ? "REQUIRED FIELD" : "OPTIONAL · YOU MAY SKIP THIS"}</p>
     </section>
