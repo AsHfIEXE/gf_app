@@ -24,7 +24,7 @@ export default function ApplyPage() {
     if (!question.required) return true;
     const value = answers[question.id]?.trim();
     if (!value) return false;
-    return question.id !== "age" || (Number(value) >= 18 && Number.isFinite(Number(value)));
+    return question.id !== "age" || (/^\d{1,3}$/.test(value) && Number(value) >= 18 && Number(value) <= 120);
   };
 
   const continueForm = () => {

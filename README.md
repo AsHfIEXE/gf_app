@@ -30,7 +30,7 @@ The migration runner prefers the direct, unpooled connection. Do not commit `.en
 
 ## Admin access
 
-The `/admin` pages and `/api/admin/*` endpoints require a signed, HTTP-only session cookie. Sessions expire after eight hours. Set `ADMIN_PASSWORD` (at least 16 characters) and `ADMIN_SESSION_SECRET` (at least 32 random characters) in Vercel Production before signing in. Generate the session secret in CMD with:
+The `/admin` pages and `/api/admin/*` endpoints require a signed, HTTP-only session cookie. Sessions expire after eight hours. Set `ADMIN_PASSWORD` (at least 8 characters) and `ADMIN_SESSION_SECRET` (at least 32 random characters) in Vercel Production before signing in. Generate the session secret in CMD with:
 
 ```cmd
 node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))"

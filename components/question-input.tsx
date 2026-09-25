@@ -25,7 +25,13 @@ export function QuestionInput({ question, value, onChange, showError }: Props) {
     </div>;
   }
 
-  const common = { value, onChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onChange(event.target.value), placeholder: question.type === "textarea" ? "Write whatever is true..." : "Your answer..." };
+  const common = { value, onChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onChange(event.target.value), placeholder: question.id === "age" ? "18 or older" : question.type === "textarea" ? "Write whatever is true..." : "Your answer..." };
+  if (question.id === "age") {
+    return <div>
+      <input className="answer-input" autoFocus type="number" min={18} max={120} step={1} inputMode="numeric" aria-label={question.title} {...common} />
+      {showError && <p className="field-error">Enter an age from 18 to 120.</p>}
+    </div>;
+  }
   return <div>
     {question.type === "textarea" ? <textarea className="answer-textarea" rows={7} autoFocus {...common} /> : <input className="answer-input" autoFocus {...common} />}
     {showError && <p className="field-error">This is one of the few required answers.</p>}

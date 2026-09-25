@@ -4,7 +4,7 @@ export const ADMIN_SESSION_TTL_MS = 8 * 60 * 60 * 1000;
 export function isAdminConfigured() {
   return Boolean(
     process.env.ADMIN_PASSWORD &&
-      process.env.ADMIN_PASSWORD.length >= 16 &&
+      process.env.ADMIN_PASSWORD.length >= 8 &&
       process.env.ADMIN_SESSION_SECRET &&
       process.env.ADMIN_SESSION_SECRET.length >= 32,
   );

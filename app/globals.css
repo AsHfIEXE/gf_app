@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap');
 
-:root { --ink:#f1eadf; --muted:#b9b1a6; --paper:#151515; --black:#0b0b0b; --line:#56514b; --red:#c44338; --light-red:#ec7568; --serif:"Playfair Display", Georgia, serif; --sans:"DM Sans",Arial,sans-serif; --mono:"DM Mono",monospace; }
+:root { --ink:#f1eadf; --muted:#b9b1a6; --paper:#151515; --black:#0b0b0b; --line:#56514b; --red:#c44338; --light-red:#ec7568; --serif:"Playfair Display", Georgia, serif; --display:var(--font-sora),Arial,sans-serif; --sans:var(--font-inter),Arial,sans-serif; --mono:"DM Mono",monospace; }
 * { box-sizing:border-box; }
 html { background:var(--black); }
 body { margin:0; color:var(--ink); background:var(--black); font-family:var(--sans); font-size:16px; min-height:100vh; }
@@ -22,7 +22,7 @@ button:disabled { cursor:not-allowed; opacity:.42; }
 .eyebrow { font:10px var(--mono); letter-spacing:.13em; color:var(--muted); margin:0; display:flex; align-items:center; gap:9px; }
 .eyebrow span { display:inline-block; width:17px; height:1px; background:var(--red); }
 h1,h2,h3,p { margin-top:0; }
-h1 { font:500 clamp(42px,6.2vw,88px)/.96 var(--serif); letter-spacing:-.045em; }
+h1 { font:500 clamp(42px,6.2vw,88px)/.96 var(--display); letter-spacing:-.045em; }
 h1 em { font-weight:500; }
 .button { display:inline-flex; border:0; align-items:center; gap:24px; padding:14px 17px; min-height:45px; font:10px var(--mono); letter-spacing:.08em; transition:background .2s,color .2s,border .2s,transform .2s; }
 .button:hover { transform:translateY(-2px); }
