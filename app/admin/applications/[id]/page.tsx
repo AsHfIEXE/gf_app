@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ArchiveLogo } from "@/components/archive-shell";
+import { AdminLogoutButton } from "@/components/admin-logout";
 import { formatDate, getApplications, saveApplication, statusLabel, type ApplicationRecord, type ApplicationStatus } from "@/lib/application-store";
 import { questions, sections, visibleAnswer } from "@/lib/questions";
 
@@ -20,7 +21,7 @@ export default function ApplicationDetailPage() {
   if (application === undefined) return <main className="admin-page" />;
   if (!application) return <main className="admin-page"><header className="admin-header"><ArchiveLogo /></header><section className="empty-state"><b>REPORT NOT FOUND</b><Link className="button button-quiet" href="/admin">RETURN TO ARCHIVE</Link></section></main>;
   return <main className="admin-page detail-page">
-    <header className="admin-header"><ArchiveLogo /><Link href="/admin">← ALL REPORTS</Link></header>
+    <header className="admin-header"><ArchiveLogo /><div className="admin-detail-nav"><Link href="/admin">← ALL REPORTS</Link><AdminLogoutButton /></div></header>
     <section className="detail-content">
       <div className="detail-head"><div><p className="eyebrow"><span />REPORT FILE</p><h1>{application.reportId}</h1><p>SUBMITTED {formatDate(application.createdAt)} · <b>{statusLabel(application.status)}</b></p></div><span className={`status-pill ${application.status.toLowerCase().replaceAll(" ", "-")}`}>{statusLabel(application.status)}</span></div>
       <div className="detail-layout"><div className="report-answers">{sections.map((section) => { const sectionQuestions = questions.filter((question) => question.section === section.id).filter((question) => application.answers[question.id]); if (!sectionQuestions.length) return null; return <section className={`answer-section ${section.id === "final" ? "answer-section-final" : ""}`} key={section.id}><h2>{section.label}</h2>{sectionQuestions.map((question) => <div className="answer-item" key={question.id}><h3>{question.title}</h3><p>{visibleAnswer(application.answers[question.id])}</p></div>)}</section>; })}</div>
